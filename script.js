@@ -82,6 +82,7 @@ restartButton.addEventListener('click', restartQuiz)
 function startQuiz() {
     // reset quiz state
     currentQuestionIndex = 0;
+    score = 0;
     scoreSpan.textContent = 0;
 
     startScreen.classList.remove('active');
@@ -128,11 +129,15 @@ function selectAnswer(event) {
 
   const selectedButton = event.target;
   const isCorrect = selectedButton.dataset.correct === 'true';
-
+  
+  /* Here Array.from() is used to convert the NodeList  returned by
+  answerContainer.children into an array, this is because the NodeList is
+  not an array and we need to use the forEach method which is available on arrays.
+  */
   Array.from(answerContainer.children).forEach(button => {
     if (button.dataset.correct === 'true') {
       button.classList.add('correct');
-    }else {
+    }else if (button === selectedButton){
       button.classList.add('incorrect')
     }
   });
